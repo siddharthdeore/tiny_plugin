@@ -2,7 +2,7 @@
 #include <memory>
 
 #include <tiny_plugin/SharedLibrary.h>
-#include "plugins/SimplePlugin.h"
+#include "plugins/AbstractPlugin.hpp"
 
 int main()
 {
@@ -11,36 +11,39 @@ int main()
     {
 
         {
+            // class constructor
             using Consturctor = void *(*)();
             Consturctor constructor = nullptr;
             constructor = reinterpret_cast<Consturctor>(simple.get_symbol("plugin_constructor"));
             auto instance = constructor();
 
+            // class destructor
             using DestroyFunc = void *(*)(void *);
             DestroyFunc destructFunc = nullptr;
             destructFunc = reinterpret_cast<DestroyFunc>(simple.get_symbol("plugin_destructor"));
             destructFunc(instance);
         }
         {
-            auto i1 = (simple.make_plugin_instance<void *>());
-            simple.destroy_plugin(i1);
+            auto inst = (simple.create_instance<void *>());
+            simple.destroy_instance(inst);
         }
         {
-            auto i2 = simple.make_plugin_sptr<void *>();
+            auto inst = simple.create_instance<AbstractPlugin *>();
+            simple.destroy_instance(inst);
         }
         {
-            auto i3 = simple.make_plugin_instance<SimplePlugin *>();
-            simple.destroy_plugin(i3);
+            auto inst = simple.create_instance<AbstractPlugin>();
+            simple.destroy_instance(inst);
+        }
+
+        {
+            auto inst = simple.make_plugin_sptr<void *>();
         }
         {
-            auto i4 = simple.make_plugin_sptr<SimplePlugin *>();
+            auto inst = simple.make_plugin_sptr<AbstractPlugin *>();
         }
         {
-            auto i5 = simple.make_plugin_sptr<SimplePlugin>();
-        }
-        {
-            auto i6 = simple.make_plugin_instance<SimplePlugin>();
-            delete i6;
+            auto inst = simple.make_plugin_sptr<AbstractPlugin>();
         }
     }
 

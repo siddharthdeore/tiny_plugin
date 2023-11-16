@@ -14,8 +14,6 @@ else()
     # add_compile_options( -Wall -Wextra -Wpedantic -Werror)
     add_compile_options( -Wall -Wextra)
 endif()
-
-
 set(COMON_LIBS pthread dl)
 
 include_directories("include")

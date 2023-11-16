@@ -1,14 +1,13 @@
 #include <iostream>
 
-#include "SimplePlugin.h"
+#include "SimplePlugin.hpp"
 
 SimplePlugin::SimplePlugin()
 {
- std::cout << " SimplePlugin constructor " << std::endl;
+    std::cout << " SimplePlugin constructor " << std::endl;
 }
 
 SimplePlugin::~SimplePlugin()
 {
- std::cout << " ~SimplePlugin destructor " << std::endl;
-
+    std::cout << " ~SimplePlugin destructor " << std::endl;
 }

@@ -6,10 +6,15 @@
 
 #include "plugin_helper.h"
 
-
-#define EXPORT_PLUGIN(P)                                      \
-    EXPORT_SYMBOL P *plugin_constructor() { return new P(); } \
-    EXPORT_SYMBOL void plugin_destructor(P *obj) { delete obj; }
+#define EXPORT_PLUGIN(P)                         \
+    EXPORT_SYMBOL P *plugin_constructor()        \
+    {                                            \
+        return new P();                          \
+    }                                            \
+    EXPORT_SYMBOL void plugin_destructor(P *obj) \
+    {                                            \
+        delete obj;                              \
+    }
 
 class SharedLibrary
 {
@@ -23,7 +28,7 @@ public:
     bool is_loaded() const;
 
     template <typename T, typename... Args>
-    T *make_plugin_instance(Args... args)
+    T *create_instance(Args... args)
     {
         using Constructor = T *(*)(Args...);
         Constructor constructor = nullptr;
@@ -38,29 +43,8 @@ public:
             return nullptr;
         }
     }
-
-    template <typename T, typename... Args>
-    std::shared_ptr<T> make_plugin_sptr(Args... args)
-    {
-        T *instance = make_plugin_instance<T>(args...);
-
-        if (instance)
-        {
-            auto deleter = [this](T *ptr)
-            {
-                destroy_plugin(ptr);
-            };
-
-            return std::shared_ptr<T>(instance, deleter);
-        }
-        else
-        {
-            return nullptr;
-        }
-    }
-
     template <typename T>
-    void destroy_plugin(T *plugin_instance)
+    void destroy_instance(T *plugin_instance)
     {
         using Destructor = void (*)(T *);
         Destructor destructor = nullptr;
@@ -71,6 +55,27 @@ public:
             destructor(plugin_instance);
         }
     }
+
+    template <typename T, typename... Args>
+    std::shared_ptr<T> make_plugin_sptr(Args... args)
+    {
+        T *instance = create_instance<T>(args...);
+
+        if (instance)
+        {
+            auto deleter = [this](T *ptr)
+            {
+                destroy_instance(ptr);
+            };
+
+            return std::shared_ptr<T>(instance, deleter);
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+
 
 private:
     std::string library_path;

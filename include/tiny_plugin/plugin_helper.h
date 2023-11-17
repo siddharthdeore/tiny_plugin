@@ -5,7 +5,7 @@
 
 #include <string>
 #include <iostream>
-#include <tiny_plugin/visibility.h>
+#include "visibility.h"
 
 // clang-format off
 #ifdef _WIN32

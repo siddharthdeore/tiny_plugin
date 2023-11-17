@@ -16,5 +16,5 @@ target_link_libraries(function_loader dl)
 target_link_directories(function_loader PUBLIC ${CMAKE_BINARY_DIR}) 
 
 add_executable(class_loader class_loader.cpp)
-target_link_libraries(class_loader dl)
+target_link_libraries(class_loader dl ComplexPlugin)
 target_link_directories(class_loader PUBLIC ${CMAKE_BINARY_DIR}) 

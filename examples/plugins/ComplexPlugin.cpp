@@ -1,12 +1,12 @@
 #include "ComplexPlugin.h"
 #include <iostream>
 
-ComplexPlugin::ComplexPlugin(std::shared_ptr<int> x)
+ComplexPlugin::ComplexPlugin(std::shared_ptr<int> x) : y(*x)
 {
-    std::cout << " Complex Plugin constructor " << *x << std::endl;
+    std::cout << " Complex Plugin constructor " << y++ << std::endl;
 }
 
 ComplexPlugin::~ComplexPlugin()
 {
-    std::cout << " ~Complex Plugin destructor " << std::endl;
+    std::cout << " ~Complex Plugin destructor " << y << std::endl;
 }

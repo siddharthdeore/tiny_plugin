@@ -6,7 +6,6 @@
 
 #include "plugin_helper.h"
 
-
 class SharedLibrary
 {
 public:
@@ -23,7 +22,7 @@ public:
     {
         using Constructor = T *(*)(Args...);
         Constructor constructor = nullptr;
-        constructor = reinterpret_cast<Constructor>(get_symbol("plugin_constructor"));
+        constructor = reinterpret_cast<Constructor>(get_symbol("class_constructor"));
 
         if (constructor)
         {
@@ -39,7 +38,7 @@ public:
     {
         using Destructor = void (*)(T *);
         Destructor destructor = nullptr;
-        destructor = reinterpret_cast<Destructor>(get_symbol("plugin_destructor"));
+        destructor = reinterpret_cast<Destructor>(get_symbol("class_destructor"));
 
         if (destructor)
         {
@@ -66,7 +65,6 @@ public:
             return nullptr;
         }
     }
-
 
 private:
     std::string library_path;

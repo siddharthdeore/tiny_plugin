@@ -57,6 +57,7 @@ int main()
         complex.destroy_instance(instance);
 
         auto inst = complex.make_plugin_sptr<void>(std::make_shared<int>(55));
+        std::cout << Type2Name(inst) << std::endl;
     }
 
     return 0;

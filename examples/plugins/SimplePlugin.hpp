@@ -15,7 +15,5 @@ public:
 private:
 };
 
-
 EXPORT_PLUGIN(SimplePlugin)
-
 #endif

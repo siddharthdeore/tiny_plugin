@@ -7,6 +7,9 @@ target_link_libraries(simple_function dl)
 add_library(SimplePlugin SHARED "plugins/SimplePlugin.cpp")
 target_link_libraries(SimplePlugin dl)
 
+add_library(ComplexPlugin SHARED "plugins/ComplexPlugin.cpp")
+target_link_libraries(ComplexPlugin dl)
+
 # executables
 add_executable(function_loader function_loader.cpp)
 target_link_libraries(function_loader dl)

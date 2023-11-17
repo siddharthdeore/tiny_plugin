@@ -6,15 +6,6 @@
 
 #include "plugin_helper.h"
 
-#define EXPORT_PLUGIN(P)                         \
-    EXPORT_SYMBOL P *plugin_constructor()        \
-    {                                            \
-        return new P();                          \
-    }                                            \
-    EXPORT_SYMBOL void plugin_destructor(P *obj) \
-    {                                            \
-        delete obj;                              \
-    }
 
 class SharedLibrary
 {

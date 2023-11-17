@@ -24,15 +24,15 @@ int main()
             destructFunc(instance);
         }
         {
-            auto inst = (simple.create_instance<void *>());
+            auto inst = (simple.create_instance<void>());
             simple.destroy_instance(inst);
         }
         {
-            auto inst = simple.create_instance<AbstractPlugin *>();
+            auto inst = simple.create_instance<void>();
             simple.destroy_instance(inst);
         }
         {
-            auto inst = simple.create_instance<AbstractPlugin>();
+            auto inst = simple.create_instance<void>();
             simple.destroy_instance(inst);
         }
 
@@ -45,6 +45,18 @@ int main()
         {
             auto inst = simple.make_plugin_sptr<AbstractPlugin>();
         }
+    }
+    SharedLibrary complex("ComplexPlugin");
+    if (complex.is_loaded())
+    {
+        // class constructor defination
+        using Consturctor = void *(*)(const std::shared_ptr<int>);
+        Consturctor constructor = nullptr;
+        constructor = reinterpret_cast<Consturctor>(complex.get_symbol("plugin_constructor"));
+        auto instance = constructor(std::make_shared<int>(5));
+        complex.destroy_instance(instance);
+
+        auto inst = complex.make_plugin_sptr<void>(std::make_shared<int>(55));
     }
 
     return 0;

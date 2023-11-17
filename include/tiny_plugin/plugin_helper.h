@@ -5,6 +5,7 @@
 
 #include <string>
 #include <iostream>
+#include <tiny_plugin/visibility.h>
 
 // clang-format off
 #ifdef _WIN32
@@ -16,32 +17,8 @@
     #define LIB_OS_SUFIX ".so"
     #define LIB_OS_PREFIX "lib"
 #endif
-
-
-#if defined(_WIN32)
-    #ifdef EXPORT_PLUGIN_DLL
-        #define EXPORT_SYMBOL __declspec(dllexport) extern "C"
-    #else
-        #define EXPORT_SYMBOL __declspec(dllimport) extern "C"
-    #endif
-#elif defined(__GNUC__) || defined(__clang__)
-    #define EXPORT_SYMBOL extern "C" __attribute__((visibility("default")))
-#elif defined(__MINGW32__) || defined(__MINGW64__)
-    #define EXPORT_SYMBOL extern "C" __declspec(dllexport) extern "C"
-#elif defined(__CYGWIN__)
-    #define EXPORT_SYMBOL extern "C" __declspec(dllexport) extern "C"
-#elif defined(__APPLE__)
-    #include <TargetConditionals.h>
-    #if TARGET_OS_MAC
-        #define EXPORT_SYMBOL extern "C" __attribute__((visibility("default")))
-    #endif
-#elif defined(__sun) && defined(__SVR4)
-    #define EXPORT_SYMBOL extern "C" __global
-#else
-    #error "Unsupported compiler/platform"
-#endif
-
 // clang-format on
+
 /**
  * @brief opens shared library from given path and return handle
  * returns nullptr on failure

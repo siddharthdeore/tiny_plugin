@@ -60,15 +60,10 @@ int main()
             auto instance = constructor(std::make_shared<int>(5));
             complex.destroy_instance(instance);
 
-<<<<<<< HEAD
-        auto inst = complex.create_instance_sptr<void>(std::make_shared<int>(55));
-        std::cout << Type2Name(inst) << std::endl;
-=======
-            auto inst = complex.make_plugin_sptr<void>(std::make_shared<int>(55));
+            auto inst = complex.create_instance_ptr<void>(std::make_shared<int>(55));
             std::cout << Type2Name(inst) << std::endl;
-            inst1 = complex.create_instance<ComplexPlugin>(std::make_shared<int>(75));
+            inst1 = complex.create_instance_ptr<ComplexPlugin>(std::make_shared<int>(75));
         }
->>>>>>> 077d3d2e25f86e22575b01191fa8ac3494e605f9
     }
     std::cout << Type2Name(inst1) << inst1->y << std::endl;
 

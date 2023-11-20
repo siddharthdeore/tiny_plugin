@@ -79,7 +79,6 @@ public:
                 destroy_instance(ptr);
             };
 
-<<<<<<< HEAD
             return std::unique_ptr<T>(instance, deleter);
         }
         else
@@ -89,8 +88,6 @@ public:
     }
 #endif
 
-=======
->>>>>>> 077d3d2e25f86e22575b01191fa8ac3494e605f9
 private:
     std::string library_path;
     void *handle;

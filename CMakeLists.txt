@@ -50,4 +50,4 @@ add_subdirectory(examples)
 
 add_executable(main main.cpp)
 target_link_libraries(main ${COMON_LIBS})
-target_link_directories(main PUBLIC ${CMAKE_BINARY_DIR}) 
+target_link_directories(main PUBLIC ${CMAKE_BINARY_DIR})

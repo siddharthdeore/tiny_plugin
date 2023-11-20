@@ -6,6 +6,8 @@
 
 int main()
 {
+
+    // following sub snipets represents diffrent ways to load and create instance of class
     SharedLibrary simple("SimplePlugin");
     if (simple.is_loaded())
     {
@@ -24,26 +26,26 @@ int main()
             destructFunc(instance);
         }
         {
-            auto inst = (simple.create_instance<void>());
+            auto inst = (simple.create_instance_ptr<void>());
             simple.destroy_instance(inst);
         }
         {
-            auto inst = simple.create_instance<void>();
+            auto inst = simple.create_instance_ptr<void>();
             simple.destroy_instance(inst);
         }
         {
-            auto inst = simple.create_instance<void>();
+            auto inst = simple.create_instance_ptr<void>();
             simple.destroy_instance(inst);
         }
 
         {
-            auto inst = simple.make_plugin_sptr<void *>();
+            auto inst = simple.create_instance_sptr<void *>();
         }
         {
-            auto inst = simple.make_plugin_sptr<AbstractPlugin *>();
+            auto inst = simple.create_instance_sptr<AbstractPlugin *>();
         }
         {
-            auto inst = simple.make_plugin_sptr<AbstractPlugin>();
+            auto inst = simple.create_instance_sptr<AbstractPlugin>();
         }
     }
     SharedLibrary complex("ComplexPlugin");
@@ -56,7 +58,7 @@ int main()
         auto instance = constructor(std::make_shared<int>(5));
         complex.destroy_instance(instance);
 
-        auto inst = complex.make_plugin_sptr<void>(std::make_shared<int>(55));
+        auto inst = complex.create_instance_sptr<void>(std::make_shared<int>(55));
         std::cout << Type2Name(inst) << std::endl;
     }
 

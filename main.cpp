@@ -9,7 +9,7 @@ int main()
 
     if (simple.is_loaded())
     {
-        auto instance = simple.make_plugin_sptr<void *>();
+        auto instance = simple.create_instance_sptr<void *>();
     }
 
     return 0;

@@ -10,9 +10,10 @@ class ComplexPlugin
 public:
     ComplexPlugin(std::shared_ptr<int> x);
     ~ComplexPlugin();
+    int y;
 
 private:
 };
 
-EXPORT_PLUGIN(ComplexPlugin,std::shared_ptr<int>);
+EXPORT_CLASS(ComplexPlugin,std::shared_ptr<int>);
 #endif

@@ -1,32 +1,45 @@
 #ifndef VISIBILITY_H
 #define VISIBILITY_H
-#include <utility> // std::forward
+
 #pragma once
 
-// clang-format off
-#if defined(_WIN32)
-    #ifdef EXPORT_PLUGIN_DLL
-        #define EXPORT_SYMBOL __declspec(dllexport) extern "C"
-    #else
-        #define EXPORT_SYMBOL __declspec(dllimport) extern "C"
-    #endif
-#elif defined(__GNUC__) || defined(__clang__)
-    #define EXPORT_SYMBOL extern "C" __attribute__((visibility("default")))
-    #define EXPORT_SYMBOL extern "C" __attribute__((visibility("default")))
-#elif defined(__MINGW32__) || defined(__MINGW64__)
-    #define EXPORT_SYMBOL extern "C" __declspec(dllexport) extern "C"
-#elif defined(__CYGWIN__)
-    #define EXPORT_SYMBOL extern "C" __declspec(dllexport) extern "C"
-#elif defined(__APPLE__)
-    #include <TargetConditionals.h>
-    #if TARGET_OS_MAC
-        #define EXPORT_SYMBOL extern "C" __attribute__((visibility("default")))
-    #endif
-#elif defined(__sun) && defined(__SVR4)
-    #define EXPORT_SYMBOL extern "C" __global
+// ref: GCC wiki https://gcc.gnu.org/wiki/Visibility
+// Generic helper definitions for shared library support
+#if defined(_WIN32) || defined(__CYGWIN__)
+  #define SYMBOL_DLL_IMPORT __declspec(dllimport)
+  #define SYMBOL_DLL_EXPORT __declspec(dllexport)
+  #define SYMBOL_DLL_LOCAL
 #else
-    #error "Unsupported compiler/platform"
+  #if __GNUC__ >= 4
+    #define SYMBOL_DLL_IMPORT __attribute__((visibility("default")))
+    #define SYMBOL_DLL_EXPORT __attribute__((visibility("default")))
+    #define SYMBOL_DLL_LOCAL  __attribute__((visibility("hidden")))
+  #else
+    #define SYMBOL_DLL_IMPORT
+    #define SYMBOL_DLL_EXPORT
+    #define SYMBOL_DLL_LOCAL
+  #endif
 #endif
+// Now we use the generic helper definitions above to define LIB_API and LIB_LOCAL.
+// LIB_API is used for the public API symbols. It either DLL imports or DLL exports (or does nothing for static build)
+// LIB_LOCAL is used for non-api symbols.
+
+ // explecitly definin  LIB_DLL, sould be done in better way
+#define LIB_DLL
+#define LIB_DLL_EXPORTS
+
+#ifdef LIB_DLL // defined if LIB is compiled as a DLL
+  #ifdef LIB_DLL_EXPORTS // defined if we are building the LIB DLL (instead of using it)
+    #define LIB_API extern "C" SYMBOL_DLL_EXPORT
+  #else
+    #define LIB_API extern "C" SYMBOL_DLL_IMPORT
+  #endif // LIB_DLL_EXPORTS
+  #define LIB_LOCAL SYMBOL_DLL_LOCAL
+#else // LIB_DLL is not defined: this means LIB is a static lib.
+  #define LIB_API extern "C"
+  #define LIB_LOCAL
+#endif // LIB_DLL
+
 
 template <typename P, typename... Args>
 P *create_plugin_instance(const Args&... args)
@@ -75,16 +88,16 @@ P *create_plugin_instance()
 
 // clang-format on
 
-// EXPORT_PLUGIN macro can take up to 8 arguments
-#define EXPORT_PLUGIN(P, ...)                                     \
-    EXPORT_SYMBOL P *plugin_constructor(EXPAND_ARGS(__VA_ARGS__)) \
-    {                                                             \
-        return new P(EXPAND_OBJ(__VA_ARGS__));                    \
-    }                                                             \
-                                                                  \
-    EXPORT_SYMBOL void plugin_destructor(P *obj)                  \
-    {                                                             \
-        delete obj;                                               \
+// EXPORT_CLASS macro can take up to 8 arguments
+#define EXPORT_CLASS(P, ...)                                     \
+    LIB_API P *class_constructor(EXPAND_ARGS(__VA_ARGS__)) \
+    {                                                            \
+        return new P(EXPAND_OBJ(__VA_ARGS__));                   \
+    }                                                            \
+                                                                 \
+    LIB_API void class_destructor(P *obj)                  \
+    {                                                            \
+        delete obj;                                              \
     }
 
 #endif

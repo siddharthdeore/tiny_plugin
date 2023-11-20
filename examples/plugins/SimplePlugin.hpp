@@ -15,5 +15,5 @@ public:
 private:
 };
 
-EXPORT_PLUGIN(SimplePlugin)
+EXPORT_CLASS(SimplePlugin)
 #endif

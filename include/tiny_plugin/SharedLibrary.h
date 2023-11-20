@@ -22,7 +22,7 @@ public:
     {
         using Constructor = T *(*)(Args...);
         Constructor constructor = nullptr;
-        constructor = reinterpret_cast<Constructor>(get_symbol("plugin_constructor"));
+        constructor = reinterpret_cast<Constructor>(get_symbol("class_constructor"));
 
         if (constructor)
         {
@@ -38,7 +38,7 @@ public:
     {
         using Destructor = void (*)(T *);
         Destructor destructor = nullptr;
-        destructor = reinterpret_cast<Destructor>(get_symbol("plugin_destructor"));
+        destructor = reinterpret_cast<Destructor>(get_symbol("class_destructor"));
 
         if (destructor)
         {
@@ -79,6 +79,7 @@ public:
                 destroy_instance(ptr);
             };
 
+<<<<<<< HEAD
             return std::unique_ptr<T>(instance, deleter);
         }
         else
@@ -88,6 +89,8 @@ public:
     }
 #endif
 
+=======
+>>>>>>> 077d3d2e25f86e22575b01191fa8ac3494e605f9
 private:
     std::string library_path;
     void *handle;

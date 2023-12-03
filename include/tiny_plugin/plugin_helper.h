@@ -20,30 +20,38 @@
 // clang-format on
 
 /**
- * @brief opens shared library from given path and return handle
- * returns nullptr on failure
+ * @brief Opens a shared library from the given path and returns the handle.
+ *        Returns nullptr on failure.
  *
- * @param library_path
- * @return void*
+ * @param library_path The path of the shared library.
+ * @return void* The handle to the opened library.
  */
 void *open_library_api(const std::string &library_path);
 
 /**
- * @brief close library handle
+ * @brief Closes the library handle.
  *
- * @param handle
+ * @param handle The handle to the library.
  */
 void close_library_api(void *handle);
 
 /**
- * @brief loads symbol from shared library handle and returns symbol handle
- * returns nullptr on failure
+ * @brief Loads a symbol from the shared library handle and returns the symbol handle.
+ *        Returns nullptr on failure.
  *
- * @param library_path
- * @return void*
+ * @param handle The handle to the library.
+ * @param symbol_name The name of the symbol to load.
+ * @return void* The handle to the loaded symbol.
  */
 void *load_symbol_api(void *handle, const std::string &symbol_name);
 
+/**
+ * @brief Opens a shared library from the given path and returns the handle.
+ *        Returns nullptr on failure.
+ *
+ * @param library_path The path of the shared library.
+ * @return void* The handle to the opened library.
+ */
 void *open_library_api(const std::string &library_path)
 {
     void *handle = nullptr;
@@ -67,6 +75,11 @@ void *open_library_api(const std::string &library_path)
     return handle;
 }
 
+/**
+ * @brief Closes the library handle.
+ *
+ * @param handle The handle to the library.
+ */
 void close_library_api(void *handle)
 {
     if (handle)
@@ -79,6 +92,14 @@ void close_library_api(void *handle)
     }
 }
 
+/**
+ * @brief Loads a symbol from the shared library handle and returns the symbol handle.
+ *        Returns nullptr on failure.
+ *
+ * @param handle The handle to the library.
+ * @param symbol_name The name of the symbol to load.
+ * @return void* The handle to the loaded symbol.
+ */
 void *load_symbol_api(void *handle, const std::string &symbol_name)
 {
     if (handle)

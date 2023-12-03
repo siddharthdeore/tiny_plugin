@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>tiny_plugin</name>
+  <version>0.0.1</version>
+  <description>C++ tiny shared library</description>
+  <maintainer email="siddharthdeore@gmail.com">siddharth deore</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">https://github.com/siddharthdeore/tiny_plugin</url>
+
+  <build_depend>git</build_depend>
+
+  <buildtool_depend>cmake</buildtool_depend>
+  <export>
+    <build_type>cmake</build_type>
+  </export>
+</package>

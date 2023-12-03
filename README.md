@@ -32,7 +32,16 @@ To use Tiny Plugin in your project, follow these simple steps:
 
 
 ### Usage
+Library can be imported in to cmake project using `find_package` CMake command as following example:
+```cmake
+cmake_minimum_required(VERSION 3.0)
+project(myproject)
+find_package(tiny_pluin REQUIRED)
+add_executable(example example.cpp)
+target_link_libraries(example tiny_pluin::tiny_pluin)
+``` 
 
+`example.cpp` to load shared library
 ```cpp
 #include <memory>
 

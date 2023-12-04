@@ -26,14 +26,14 @@
  * @param library_path The path of the shared library.
  * @return void* The handle to the opened library.
  */
-void *open_library_api(const std::string &library_path);
+inline void *open_library_api(const std::string &library_path);
 
 /**
  * @brief Closes the library handle.
  *
  * @param handle The handle to the library.
  */
-void close_library_api(void *handle);
+inline void close_library_api(void *handle);
 
 /**
  * @brief Loads a symbol from the shared library handle and returns the symbol handle.
@@ -43,7 +43,7 @@ void close_library_api(void *handle);
  * @param symbol_name The name of the symbol to load.
  * @return void* The handle to the loaded symbol.
  */
-void *load_symbol_api(void *handle, const std::string &symbol_name);
+inline void *load_symbol_api(void *handle, const std::string &symbol_name);
 
 /**
  * @brief Opens a shared library from the given path and returns the handle.
@@ -52,7 +52,7 @@ void *load_symbol_api(void *handle, const std::string &symbol_name);
  * @param library_path The path of the shared library.
  * @return void* The handle to the opened library.
  */
-void *open_library_api(const std::string &library_path)
+inline void *open_library_api(const std::string &library_path)
 {
     void *handle = nullptr;
 
@@ -80,7 +80,7 @@ void *open_library_api(const std::string &library_path)
  *
  * @param handle The handle to the library.
  */
-void close_library_api(void *handle)
+inline void close_library_api(void *handle)
 {
     if (handle)
     {
@@ -100,7 +100,7 @@ void close_library_api(void *handle)
  * @param symbol_name The name of the symbol to load.
  * @return void* The handle to the loaded symbol.
  */
-void *load_symbol_api(void *handle, const std::string &symbol_name)
+inline void *load_symbol_api(void *handle, const std::string &symbol_name)
 {
     if (handle)
     {

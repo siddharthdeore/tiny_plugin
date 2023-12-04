@@ -159,11 +159,11 @@ private:
 
 /**
  * @brief Construct a new Shared Library:: Shared Library object
- * 
- * @param library_name 
- * @param dir_path 
+ *
+ * @param library_name
+ * @param dir_path
  */
-SharedLibrary::SharedLibrary(const std::string &library_name, const std::string &dir_path)
+inline SharedLibrary::SharedLibrary(const std::string &library_name, const std::string &dir_path)
 {
     library_path = dir_path + LIB_OS_PREFIX + library_name + LIB_OS_SUFIX;
     handle = open_library_api(library_path);
@@ -171,10 +171,10 @@ SharedLibrary::SharedLibrary(const std::string &library_name, const std::string 
 
 /**
  * @brief Destroys the SharedLibrary object.
- * 
+ *
  * If the library is loaded, it is unloaded before destruction.
  */
-SharedLibrary::~SharedLibrary()
+inline SharedLibrary::~SharedLibrary()
 {
     if (is_loaded())
     {
@@ -183,21 +183,21 @@ SharedLibrary::~SharedLibrary()
 }
 /**
  * @brief Retrieves a symbol from the loaded library.
- * 
- * @param name 
- * @return void* 
+ *
+ * @param name
+ * @return void*
  */
-void *SharedLibrary::get_symbol(const std::string &name) const
+inline void *SharedLibrary::get_symbol(const std::string &name) const
 {
     return load_symbol_api(handle, name);
 }
 /**
  * @brief Checks if the library is loaded.
- * 
+ *
  * @return true  if library is loaded
  * @return false if library is not loaded
  */
-bool SharedLibrary::is_loaded() const
+inline bool SharedLibrary::is_loaded() const
 {
     return handle != nullptr;
 }

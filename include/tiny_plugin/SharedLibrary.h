@@ -23,13 +23,13 @@ class SharedLibrary
 {
 public:
     using sptr = std::shared_ptr<SharedLibrary>; ///< Shared pointer to a SharedLibrary object.
-    sptr make_shared(const std::string &library_name, const std::string &dir_path = "")
+    static inline SharedLibrary::sptr make_shared(const std::string &library_name, const std::string &dir_path = "")
     {
         return std::make_shared<SharedLibrary>(library_name, dir_path);
     }
 #if __cplusplus >= 201300                        // c++ 14 and above
     using uptr = std::unique_ptr<SharedLibrary>; ///< Unique pointer to a SharedLibrary object.
-    uptr make_unique(const std::string &library_name, const std::string &dir_path = "")
+    static inline SharedLibrary::uptr make_unique(const std::string &library_name, const std::string &dir_path = "")
     {
         return std::make_unique<SharedLibrary>(library_name, dir_path);
     }

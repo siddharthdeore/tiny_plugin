@@ -18,11 +18,13 @@ include(GNUInstallDirs)
 
 include(CMakePackageConfigHelpers)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-
 if(MSVC)
-    add_compile_options(/W4 /WX)
+    #add_compile_options(/W4 /WX)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+    set(BUILD_SHARED_LIBS TRUE)
 else()
     add_compile_options(-Wall -Wextra)
+    set(EXT_LIBS dl)
 endif()
 
 include_directories("include")
@@ -71,5 +73,5 @@ include(AddUninstallTarget)
 add_subdirectory(examples)
 
 add_executable(main main.cpp)
-target_link_libraries(main dl)
+target_link_libraries(main ${EXT_LIBS})
 target_link_directories(main PUBLIC ${CMAKE_BINARY_DIR})

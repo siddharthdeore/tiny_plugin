@@ -177,7 +177,11 @@ private:
  */
 inline SharedLibrary::SharedLibrary(const std::string &library_name, const std::string &dir_path)
 {
+#ifdef _WIN32
+    library_path = dir_path + library_name + LIB_OS_SUFIX;
+#else
     library_path = dir_path + LIB_OS_PREFIX + library_name + LIB_OS_SUFIX;
+#endif
     handle = open_library_api(library_path);
 }
 

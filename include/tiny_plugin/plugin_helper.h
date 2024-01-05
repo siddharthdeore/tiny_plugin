@@ -11,7 +11,6 @@
 #ifdef _WIN32
     #include <Windows.h>
     #define LIB_OS_SUFIX ".dll"
-    #define LIB_OS_PRIFIX ""
 #else
     #include <dlfcn.h>
     #define LIB_OS_SUFIX ".so"

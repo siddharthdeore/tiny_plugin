@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <tiny_plugin/SharedLibrary.h>
+#include <tiny_plugin/plugin_helper.h>
 #include "AbstractPlugin.hpp"
 
 class SimplePlugin : public AbstractPlugin
@@ -15,5 +15,5 @@ public:
 private:
 };
 
-EXPORT_CLASS(SimplePlugin)
+EXPORT_CLASS_NOARG(SimplePlugin)
 #endif

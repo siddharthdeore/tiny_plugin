@@ -90,12 +90,23 @@ P *create_plugin_instance()
 
 // EXPORT_CLASS macro can take up to 8 arguments
 #define EXPORT_CLASS(P, ...)                                     \
-    LIB_API P *class_constructor(EXPAND_ARGS(__VA_ARGS__)) \
+    LIB_API P *class_constructor(EXPAND_ARGS(__VA_ARGS__))       \
     {                                                            \
         return new P(EXPAND_OBJ(__VA_ARGS__));                   \
     }                                                            \
                                                                  \
-    LIB_API void class_destructor(P *obj)                  \
+    LIB_API void class_destructor(P *obj)                        \
+    {                                                            \
+        delete obj;                                              \
+    }
+
+#define EXPORT_CLASS_NOARG(P)                                    \
+    LIB_API P *class_constructor()                               \
+    {                                                            \
+        return new P();                                          \
+    }                                                            \
+                                                                 \
+    LIB_API void class_destructor(P *obj)                        \
     {                                                            \
         delete obj;                                              \
     }

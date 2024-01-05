@@ -104,7 +104,7 @@ inline void *load_symbol_api(void *handle, const std::string &symbol_name)
     if (handle)
     {
 #ifdef _WIN32
-        return GetProcAddress(static_cast<HMODULE>(handle), symbol_name.c_str());
+        return (void *)GetProcAddress(static_cast<HMODULE>(handle), symbol_name.c_str());
 #else
         return dlsym(handle, symbol_name.c_str());
 #endif

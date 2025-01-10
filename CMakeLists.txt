@@ -72,6 +72,6 @@ include(AddUninstallTarget)
 
 add_subdirectory(examples)
 
-add_executable(main main.cpp)
-target_link_libraries(main ${EXT_LIBS})
-target_link_directories(main PUBLIC ${CMAKE_BINARY_DIR})
+add_executable(tiny_plugin_app main.cpp)
+target_link_libraries(tiny_plugin_app ${EXT_LIBS})
+target_link_directories(tiny_plugin_app PUBLIC ${CMAKE_BINARY_DIR})

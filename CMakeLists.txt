@@ -23,7 +23,7 @@ if(MSVC)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
     set(BUILD_SHARED_LIBS TRUE)
 else()
-    add_compile_options(-Wall -Wextra)
+    add_compile_options(-Wall -Wextra -Wpedantic)
     set(EXT_LIBS dl)
 endif()
 
@@ -67,11 +67,10 @@ include(CPack)
 # make uninstall
 include(AddUninstallTarget)
 
-# Optional: Add an alias for easier usage
-# add_library(YourNamespace::YourLibrary ALIAS YourLibrary)
-
-add_subdirectory(examples)
-
-add_executable(tiny_plugin_app main.cpp)
-target_link_libraries(tiny_plugin_app ${EXT_LIBS})
-target_link_directories(tiny_plugin_app PUBLIC ${CMAKE_BINARY_DIR})
+option(BUILD_TINY_PLUGIN_EXAMPLES "Build  Tiny Plugin examples" OFF)
+if(BUILD_TINY_PLUGIN_EXAMPLES)
+  add_subdirectory(examples)
+  add_executable(tiny_plugin_app main.cpp)
+  target_link_libraries(tiny_plugin_app ${EXT_LIBS})
+  target_link_directories(tiny_plugin_app PUBLIC ${CMAKE_BINARY_DIR})
+endif()

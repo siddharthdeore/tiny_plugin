@@ -15,5 +15,5 @@ public:
 private:
 };
 
-EXPORT_CLASS(ComplexPlugin,std::shared_ptr<int>);
+EXPORT_CLASS(ComplexPlugin,std::shared_ptr<int>)
 #endif
